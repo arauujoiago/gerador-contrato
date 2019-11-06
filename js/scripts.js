@@ -142,7 +142,6 @@ $(document).ready(function() {
         var $rg = $("input[name='rg']");
         var $numero = $("input[name='numero']");
         var $complemento = $("input[name='complemento']");
-        var $cpf = $("input[name='cpf']");
         $.getJSON('pages/function_db_material.php', {
             cpf: $("#cpf").val()
         }, function(json) {
@@ -162,7 +161,6 @@ $(document).ready(function() {
                 $cep.val(json.cep);
                 $numero.val(json.numero);
                 $complemento.val(json.complemento);
-                $cpf.val(json.cpf);
             }
             $("#spinLoading").hide();
             $("#conteudoBotaoLoading").fadeIn("slow");
