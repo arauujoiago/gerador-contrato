@@ -97,9 +97,39 @@ document.getElementById('pessoa').addEventListener('change', function() {
 
 */
 
+// FUNÇÃO VALIDAR CEP
+
+function ValidarCEP(ObjCEP) {
+
+    var cep = ObjCEP;
+
+    if (cep.length != 8) {
+        return true;
+    } else {
+        return null;
+    };
+
+};
+
+
+// FUNÇÃO SOMENTE NUMEROS
+
+function SomenteNumero(e) {
+    var tecla = (window.event) ? event.keyCode : e.which;
+    if ((tecla > 47 && tecla < 58)) return true;
+    else {
+        if (tecla == 8 || tecla == 0) return true;
+        else return false;
+    }
+}
+
+
+
 // AUTOCOMPLETAR DO BANCO DE DADOS
 $(document).ready(function() {
     $("#buscar-cpf").click(function() {
+        $("#spinLoading").fadeIn("slow");
+        $("#conteudoBotaoLoading").hide();
         var $nome = $("input[name='nome']");
         var $nacionalidade = $("input[name='nacionalidade']");
         var $profissao = $("input[name='profissao']");
@@ -112,22 +142,30 @@ $(document).ready(function() {
         var $rg = $("input[name='rg']");
         var $numero = $("input[name='numero']");
         var $complemento = $("input[name='complemento']");
+        var $cpf = $("input[name='cpf']");
         $.getJSON('pages/function_db_material.php', {
             cpf: $("#cpf").val()
         }, function(json) {
-            $nome.val(json.nome);
-            $nacionalidade.val(json.nacionalidade);
-            $profissao.val(json.profissao);
-            $est_civ.val(json.est_civ);
-            $rg.val(json.rg);
-            $cep.val(json.cep);
-            $rua.val(json.rua);
-            $cidade.val(json.cidade);
-            $bairro.val(json.bairro);
-            $estado.val(json.estado);
-            $cep.val(json.cep);
-            $numero.val(json.numero);
-            $complemento.val(json.complemento);
+            if (json.flag == 1) {
+                alert("CPF não encontrado.");
+            } else {
+                $nome.val(json.nome);
+                $nacionalidade.val(json.nacionalidade);
+                $profissao.val(json.profissao);
+                $est_civ.val(json.est_civ);
+                $rg.val(json.rg);
+                $cep.val(json.cep);
+                $rua.val(json.rua);
+                $cidade.val(json.cidade);
+                $bairro.val(json.bairro);
+                $estado.val(json.estado);
+                $cep.val(json.cep);
+                $numero.val(json.numero);
+                $complemento.val(json.complemento);
+                $cpf.val(json.cpf);
+            }
+            $("#spinLoading").hide();
+            $("#conteudoBotaoLoading").fadeIn("slow");
         });
     });
 });
@@ -135,23 +173,32 @@ $(document).ready(function() {
 //AUTOCOMPLETAR CEP
 $(document).ready(function() {
     $("#buscar-cep").click(function() {
-        var $rua = $("input[name='rua']");
-        var $numero = $("input[name='numero']");
-        var $complemento = $("input[name='complemento']");
-        var $bairro = $("input[name='bairro']");
-        var $cidade = $("input[name='cidade']");
-        var $estado = $("input[name='estado']");
-        var $cep = $("input[name='cep']");
-        $.getJSON('https://viacep.com.br/ws/' + $cep.val() + '/json/', {}, function(json) {
-            $rua.val(json.logradouro);
-            $numero.val(json.numero);
-            $complemento.val(json.complemento);
-            $bairro.val(json.bairro);
-            $cidade.val(json.localidade);
-            $estado.val(json.uf);
-        });
+        if (ValidarCEP($("#cep").val())) {
+            $("#cep").val("Digite um CEP Válido!");
+        } else {
+            $("#spinLoadingCEP").fadeIn("slow");
+            $("#conteudoBotaoLoadingCEP").hide();
+            var $rua = $("input[name='rua']");
+            var $numero = $("input[name='numero']");
+            var $complemento = $("input[name='complemento']");
+            var $bairro = $("input[name='bairro']");
+            var $cidade = $("input[name='cidade']");
+            var $estado = $("input[name='estado']");
+            var $cep = $("input[name='cep']");
+            $.getJSON('https://viacep.com.br/ws/' + $cep.val() + '/json/', {}, function(json) {
+                $rua.val(json.logradouro);
+                $numero.val(json.numero);
+                $complemento.val(json.complemento);
+                $bairro.val(json.bairro);
+                $cidade.val(json.localidade);
+                $estado.val(json.uf);
+                $("#spinLoadingCEP").hide();
+                $("#conteudoBotaoLoadingCEP").fadeIn("slow");
+            });
+        }
     });
 });
+
 
 //ESCONDE MOSTRA CAMPOS
 $(document).ready(function() {

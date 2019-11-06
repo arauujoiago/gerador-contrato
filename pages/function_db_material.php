@@ -27,7 +27,7 @@ function retorna($cpf, $conn){
         $valores['complemento'] = utf8_encode($row_resultado['compl']);
         $valores['cep'] = utf8_encode($row_resultado['cep']);
 	}else{
-		$valores['nome'] = 'ERROR';
+        $valores['flag'] = 1;
 	}
 	return json_encode($valores);
 }

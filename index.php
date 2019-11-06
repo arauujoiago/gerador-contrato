@@ -25,7 +25,7 @@
 <body>
     <div class="container" id="c1">
         <div class="text-center">
-            <img src="images/logo.png" id="logo">
+            <img class="img-fluid" src="images/logo2.png" id="logo">
         </div>
         <?php
         if (isset($_SESSION['msg'])) {
@@ -70,9 +70,12 @@
                 <div class="col-sm-6">
                     <label for="cpf">CPF/CNPJ:</label>
                     <div class="form-group input-group" id="divcpf">
-                        <input type="text" class="form-control" id="cpf" name="cpf">
+                        <input type="text" class="form-control" id="cpf" name="cpf" onkeypress='return SomenteNumero(event)'>
                         <div class="input-group-append">
-                            <button type="button" id="buscar-cpf" class="btn input-group-text btn-danger">Preencher</button>
+                            <button type="button" id="buscar-cpf" style="min-width: 100px;" class="btn input-group-text btn-danger"><span id="conteudoBotaoLoading">Preencher</span>
+                                <div id="spinLoading" class="spinner-border spinner-border" style="display: none; margin-left: 26px; width: 20px; height: 20px;" role="status">
+                                </div>
+                            </button>
                         </div>
                     </div>
 
@@ -80,7 +83,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for="rg">RG:</label>
-                        <input type="text" class="form-control" name="rg" required onkeyup="formatarg(this,event)" placeholder="XXX.XXX.XXX">
+                        <input type="text" class="form-control" name="rg" required onkeyup="formatarg(this,event)" onkeypress='return SomenteNumero(event)'>
                     </div>
                 </div>
             </div>
@@ -104,31 +107,27 @@ Meios Alternativos de Resolução de Conflitos, 30 horas, nível: Pós-graduaç�
                     </div>
                     <div class="form-group">
                         <label for="nacionalidade">Nacionalidade:</label>
-                        <input type="text" class="form-control" name="nacionalidade" required placeholder="Brasileiro">
+                        <input type="text" class="form-control" name="nacionalidade" required>
                     </div>
                     <div class="form-group">
                         <label for="profissao">Profissão:</label>
-                        <input type="text" class="form-control" name="profissao" required placeholder="Professor">
+                        <input type="text" class="form-control" name="profissao" required>
                     </div>
                     <div class="form-group">
                         <label for="est_civ">Estado Civil:</label>
-                        <select class="form-control" name="est_civ">
-                            <option>Solteiro(a)</option>
-                            <option>Casado(a)</option>
-                            <option>União estável</option>
-                            <option>Separado(a)</option>
-                            <option>Divorciado(a)</option>
-                            <option>Viúvo(a)</option>
-                        </select>
+                        <input type="text" class="form-control" id="est_civ" name="est_civ" required>
                     </div>
                 </div>
             </div>
             <label for="cep">CEP:</label>
             <div class="form-row">
                 <div class="input-group form-group">
-                    <input type="text" class="form-control" name="cep" id="cep" required placeholder="XXXXXXXX">
+                    <input type="text" class="form-control" name="cep" id="cep" maxlength='8' value='' onkeypress='return SomenteNumero(event)'>
                     <div class="input-group-append">
-                        <button type="button" id="buscar-cep" class="btn input-group-text btn-danger">Buscar</button>
+                        <button type="button" id="buscar-cep" style="min-width: 100px;" class="btn input-group-text btn-danger"><span id="conteudoBotaoLoadingCEP">Preencher</span>
+                            <div id="spinLoadingCEP" class="spinner-border spinner-border" style="display: none; margin-left: 26px; width: 20px; height: 20px;" role="status">
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -136,29 +135,29 @@ Meios Alternativos de Resolução de Conflitos, 30 horas, nível: Pós-graduaç�
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="rua">Rua:</label>
-                        <input type="text" class="form-control" name="rua" required placeholder="Rua/Av. Humberto Gama">
+                        <input type="text" class="form-control" name="rua" required>
                     </div>
                     <div class="form-group">
                         <label for="numero">Número:</label>
-                        <input type="text" class="form-control" name="numero" required placeholder="1774">
+                        <input type="text" class="form-control" name="numero" required>
                     </div>
                     <div class="form-group">
                         <label for="complemento">Complemento:</label>
-                        <input type="text" class="form-control" name="complemento" placeholder="Ap. 131">
+                        <input type="text" class="form-control" name="complemento">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="bairro">Bairro:</label>
-                        <input type="text" class="form-control" name="bairro" required placeholder="Lagoa Nova">
+                        <input type="text" class="form-control" name="bairro" required>
                     </div>
                     <div class="form-group">
                         <label for="cidade">Cidade:</label>
-                        <input type="text" class="form-control" name="cidade" required placeholder="Natal">
+                        <input type="text" class="form-control" name="cidade" required>
                     </div>
                     <div class="form-group">
                         <label for="estado">Estado:</label>
-                        <input type="text" class="form-control" name="estado" required placeholder="Rio Grande do Norte">
+                        <input type="text" class="form-control" name="estado" required>
                     </div>
                 </div>
             </div>
